@@ -1,0 +1,4 @@
+sceneSetups:
+- path: "Assets/Kick996\u3011.unity"
+  isLoaded: 1
+  isActive: 1

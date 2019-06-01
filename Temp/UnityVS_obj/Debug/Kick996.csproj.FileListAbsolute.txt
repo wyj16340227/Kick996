@@ -1,2 +1,0 @@
-C:\Users\wjy\Documents\Kick996\Temp\UnityVS_obj\Debug\Kick996.csprojResolveAssemblyReference.cache
-C:\Users\wjy\Documents\Kick996\Temp\UnityVS_obj\Debug\Kick996.csproj.CoreCompileInputs.cache

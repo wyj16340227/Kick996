@@ -25,6 +25,7 @@ public static class attackList // static 不是必须
 
     public static playerAttack defense = new playerAttack(0, 0, 0, 100);        //防御
 }
+
 public class PlayerState
 {
     public int life { get; set; }
@@ -88,4 +89,25 @@ public class Player : Subject
     void Update () {
         Notify(state);
     }
+
+    public void GetAttack (int amount)
+    {
+        state.life -= amount;   
+    }
+
+    //public void TakeDamage(int amount)
+    //{
+    //    damaged = true;
+
+    //    currentHealth -= amount;
+
+    //    healthSlider.value = currentHealth;
+
+    //    playerAudio.Play();
+
+    //    if (currentHealth <= 0 && !isDead)
+    //    {
+    //        Death();
+    //    }
+    //}
 }
