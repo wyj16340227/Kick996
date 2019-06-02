@@ -61,14 +61,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\ChapaaUI.cs" />
-    <Compile Include="Assets\Scripts\Enemy.cs" />
-    <Compile Include="Assets\Scripts\HelpUI.cs" />
-    <Compile Include="Assets\Scripts\Model.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\Scripts\PreludeUI.cs" />
-    <Compile Include="Assets\Scripts\SceneController.cs" />
-    <Compile Include="Assets\Scripts\StartUI.cs" />
+    <Compile Include="Assets\Scripts\Controller\Model.cs" />
+    <Compile Include="Assets\Scripts\Controller\SceneController.cs" />
+    <Compile Include="Assets\Scripts\Controller\UIController.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyFactory.cs" />
+    <Compile Include="Assets\Scripts\Observer.cs" />
+    <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Subject.cs" />
+    <Compile Include="Assets\Scripts\UI\ChapaaUI.cs" />
+    <Compile Include="Assets\Scripts\UI\HelpUI.cs" />
+    <Compile Include="Assets\Scripts\UI\PreludeUI.cs" />
+    <Compile Include="Assets\Scripts\UI\StartUI.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/wjy/Documents/Kick996/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
