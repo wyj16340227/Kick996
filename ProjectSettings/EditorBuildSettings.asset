@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/help.unity
     guid: cdf86999d33f86548bc147f8971237eb
+  - enabled: 1
+    path: Assets/Scenes/chapaa.unity
+    guid: fbcc7bccc0b07e54b8fb79339fa5f459
   m_configObjects: {}

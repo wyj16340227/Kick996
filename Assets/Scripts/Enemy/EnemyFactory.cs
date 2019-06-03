@@ -15,9 +15,9 @@ public class EnemyFactory : MonoBehaviour
         prefabPre = "Prefabs/";
         prefabName = new string[] {
             "",
-            "enemy1",
-            "enemy2",
-            "enemy3"
+            "Enemy1",
+            "Enemy2",
+            "Enemy3"
         };
     }
 

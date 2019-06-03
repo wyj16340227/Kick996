@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class StartUI : MonoBehaviour
 {
-    GUIStyle fontstyle = new GUIStyle();                //GUI
+    GUIStyle titleStyle = new GUIStyle();               //title GUI style
+    GUIStyle tipStyle = new GUIStyle();                 //tips GUI style
+    float lengthUnit = SceneController.lengthUnit;
     public static int GameLevel;
-    string[] GameDifficult = new string[] { "Paradise", "Easy", "Difficult", "Hail"};
+    bool jump = false;
+    string[] GameDifficult = new string[] { "Paradise", "Easy", "Difficult", "Hell"};
     // Start is called before the first frame update
     void Start()
     {
-        fontstyle.fontSize = 50;
-        fontstyle.normal.textColor = new Color(255, 255, 255);
-        fontstyle.alignment = TextAnchor.MiddleCenter;
+        Debug.Log("Welcome start layer");
+        {
+            titleStyle.fontSize = (int)lengthUnit * 10;
+            titleStyle.normal.textColor = new Color(100, 100, 100);
+            titleStyle.alignment = TextAnchor.MiddleCenter;
+        }
+        {
+            tipStyle.fontSize = (int)lengthUnit * 4;
+            tipStyle.normal.textColor = new Color(100, 200, 150);
+            tipStyle.alignment = TextAnchor.MiddleCenter;
+        }
         GameLevel = 0;
     }
 
@@ -24,30 +35,39 @@ public class StartUI : MonoBehaviour
 
     private void OnGUI()
     {
-        GUI.Label(new Rect(0, 0, 100, 20), "Choose the Difficult");
-        GUI.Label(new Rect(0, 100, 100, 20), "Current: " + GameDifficult[GameLevel]);
+        GUI.Label(new Rect(Screen.width * 0.5f - (lengthUnit * 10), Screen.height * 0.1f, lengthUnit * 20, lengthUnit * 5),
+            "Choose the Difficult", titleStyle);
+        GUI.Label(new Rect(Screen.width * 0.5f - (lengthUnit * 10), Screen.height * 0.1f + (lengthUnit * 10), lengthUnit * 20, lengthUnit * 5),
+            "Current: " + GameDifficult[GameLevel], titleStyle);
         for (int i = 0; i < 4; i++)
         {
-            if (GUI.Button(new Rect(100 + 50 * i, 100, 50, 50), GameDifficult[i]))
+            if (GUI.Button(new Rect(Screen.width * 0.5f - (lengthUnit * 15 * (2 - i)), Screen.height * 0.4f, lengthUnit * 15, lengthUnit * 5), GameDifficult[i]))
             {
                 GameLevel = i;
             }
         }
-        if (GUI.Button(new Rect(100, 200, 50, 50), "Start"))
+        if (GUI.Button(new Rect(Screen.width * 0.2f - (lengthUnit * 5), Screen.height * 0.8f, lengthUnit * 10, lengthUnit * 5), "Start/S", titleStyle)
+            || SceneController.GetInput() == KeyCode.S)
         {
-#pragma warning disable CS0618 // 类型或成员已过时
-            Application.LoadLevel("chapaa");
-#pragma warning restore CS0618 // 类型或成员已过时
+            if (!jump)
+            {
+                jump = !jump;
+                GameObject.Find("myData").GetComponent<SceneController>().StartGame();
+            }
         }
-        if (GUI.Button(new Rect(200, 200, 50, 50), "Help"))
+        if (GUI.Button(new Rect(Screen.width * 0.5f - (lengthUnit * 5), Screen.height * 0.8f, lengthUnit * 10, lengthUnit * 5), "Help/H", titleStyle)
+            || SceneController.GetInput() == KeyCode.H)
         {
-#pragma warning disable CS0618 // 类型或成员已过时
-            Application.LoadLevel("help");
-#pragma warning restore CS0618 // 类型或成员已过时
+            if (!jump)
+            {
+                jump = !jump;
+                GameObject.Find("myData").GetComponent<SceneController>().NextSection();
+            }
         }
-        if (GUI.Button(new Rect(300, 200, 50, 50), "Quit"))
+        if (GUI.Button(new Rect(Screen.width * 0.8f - (lengthUnit * 5), Screen.height * 0.8f, lengthUnit * 10, lengthUnit * 5), "Quit/Q", titleStyle)
+            || SceneController.GetInput() == KeyCode.Q)
         {
-            
+            Application.Quit();
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : Observer {
-    private PlayerState playerState;
+    private PlayerState playerState = new PlayerState();
 
 
 	// Use this for initialization

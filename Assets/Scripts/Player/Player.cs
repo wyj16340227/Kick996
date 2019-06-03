@@ -40,7 +40,7 @@ public class PlayerState
 
 public class Player : Subject
 {
-    private PlayerState state;
+    private PlayerState state = new PlayerState();
 	// Use this for initialization
 	void Start () {
         state.level = 1;                        //等级

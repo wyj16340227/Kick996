@@ -3,20 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Model : MonoBehaviour {
-    private Subject sub;
     private GameObject player;
-    private Observer obs;
     private EnemyFactory enemyFac;
+    private int enemyType;
     // Use this for initialization
     void Start () {
-		
-	}
-
-    
-	
-	// Update is called once per frame
-	void Update () {
-		
+        enemyFac = gameObject.AddComponent<EnemyFactory>() as EnemyFactory;
 	}
 
     //add to the observer

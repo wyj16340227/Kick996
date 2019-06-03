@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class UIController : Observer
 {
-    GUIStyle fontstyle = new GUIStyle();                //GUI
-    GameStatues gameStatues;
-    private bool gameOver;
+    GUIStyle fontstyle = new GUIStyle();                    //GUI
+    GameInfo gameInfo = new GameInfo();                     //display game infomation
+    private PlayerState playerState = new PlayerState();
     private void Start()
     {
         fontstyle.fontSize = 50;
@@ -14,19 +14,19 @@ public class UIController : Observer
         fontstyle.alignment = TextAnchor.MiddleCenter;
     }
 
-    public void SetGame(GameStatues _gameStatus)
+    public void SetGame(GameInfo _gameInfo)
     {
-        this.gameStatues = _gameStatus;
+        this.gameInfo = _gameInfo;
     }
 
-    public override void Reaction(PlayerState playerState)
+    public override void Reaction(PlayerState _playerState)
     {
-        gameOver = playerState.isDie;
+        playerState = _playerState;
     }
 
     private void OnGUI()
     {
-        if (gameOver)
+        if (playerState.isDie)
         {
             GUI.Button(new Rect(Screen.width / 2, Screen.height / 2, 100, 50), "Game Over", fontstyle);
         }

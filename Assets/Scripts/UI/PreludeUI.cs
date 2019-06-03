@@ -4,30 +4,38 @@ using UnityEngine;
 
 public class PreludeUI : MonoBehaviour
 {
-    GUIStyle fontstyle = new GUIStyle();                //GUI
+    GUIStyle titleStyle = new GUIStyle();               //title GUI style
+    GUIStyle tipStyle = new GUIStyle();                 //tips GUI style
+    float lengthUnit = SceneController.lengthUnit;
     string[] intro;
     float currentTime;                                  //remark current time
-    int secondPerSentences = 1;                         //sentence time
+    int secondPerSentence = 2;                          //sentence time
+    bool jump = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Welcome prelude layer");
         intro = new string[] {"this is a old story",
         "good good study",
         "day day up",
         "Welcome"};
-        currentTime = 0;
-        fontstyle.fontSize = 50;
-        fontstyle.normal.textColor = new Color(255, 255, 255);
-        fontstyle.alignment = TextAnchor.MiddleCenter;
+        {
+            titleStyle.fontSize = (int)lengthUnit * 10;
+            titleStyle.normal.textColor = new Color(100, 100, 100);
+            titleStyle.alignment = TextAnchor.MiddleCenter;
+        }
+        {
+            tipStyle.fontSize = (int)lengthUnit * 4;
+            tipStyle.normal.textColor = new Color(100, 200, 150);
+            tipStyle.alignment = TextAnchor.MiddleCenter;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(intro.Length);
-        Debug.Log(currentTime);
-        if (currentTime / secondPerSentences < intro.Length - 1)
+        if (currentTime / secondPerSentence < intro.Length - 1)
         {
             currentTime += Time.deltaTime;
         }
@@ -35,14 +43,17 @@ public class PreludeUI : MonoBehaviour
 
     private void OnGUI()
     {
-
-        GUI.TextArea(new Rect(0, 0, 200, 200), "Press key S to skip the prelude", fontstyle);
-        if (SceneController.GetInput() == KeyCode.S)
+        if (GUI.Button(new Rect(Screen.width * 0.7f, Screen.height * 0.8f, lengthUnit * 2, lengthUnit * 5),
+            "Skip/S", titleStyle) || SceneController.GetInput() == KeyCode.S)
         {
-#pragma warning disable CS0618 // 类型或成员已过时
-            Application.LoadLevel("start");
-#pragma warning restore CS0618 // 类型或成员已过时
+            if (!jump)
+            {
+                jump = !jump;
+                Debug.Log("Turn to Start layer");
+                GameObject.Find("myData").GetComponent<SceneController>().NextSection();
+            }
         }
-        GUI.TextArea(new Rect(0, 200, 200, 200), intro[(int)currentTime], fontstyle);                   //story
+        GUI.Label(new Rect(Screen.width * 0.5f - (lengthUnit * 15), Screen.height * 0.5f, lengthUnit * 30, lengthUnit * 5), 
+            intro[(int)(currentTime / secondPerSentence)], titleStyle);                     //story
     }
 }
