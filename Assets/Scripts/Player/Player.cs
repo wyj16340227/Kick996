@@ -43,6 +43,7 @@ public class Player : Subject
     private PlayerState state = new PlayerState();
 	// Use this for initialization
 	void Start () {
+        DontDestroyOnLoad(this);
         state.level = 1;                        //等级
         state.life = 100;                       //生命值
         state.isDie = false;                    //初始活着
@@ -56,6 +57,7 @@ public class Player : Subject
 
     public override void Attach(Observer o)
     {
+        Debug.Log("get one " + o.name);
         obs.Add(o);
     }
 
@@ -64,17 +66,24 @@ public class Player : Subject
         obs.Remove(o);
     }
 
-    public override void Notify(PlayerState playerState)
+    public override void NotifyPlayer(PlayerState playerState)
     {
         foreach (Observer o in obs)
         {
-            o.Reaction(playerState);
+            o.ReactionPlayer(playerState);
         }
     }
 
+    //useless funciton
+    public override void NotifyEnemy(int enemyNum, int bossNum)
+    {
+
+    }
+
+
     // Update is called once per frame
     void Update () {
-        Notify(state);
+        NotifyPlayer(state);
     }
 
     public void GetAttack (int amount)

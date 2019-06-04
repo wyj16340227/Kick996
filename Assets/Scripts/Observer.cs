@@ -4,5 +4,7 @@ using UnityEngine;
 
 public abstract class Observer : MonoBehaviour
 {
-    public abstract void Reaction(PlayerState playerState);
+    public abstract void ReactionPlayer(PlayerState playerState);
+
+    public abstract void ReactionEnemy(int enemyNum, int bossNum);
 }

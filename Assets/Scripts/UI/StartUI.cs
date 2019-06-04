@@ -62,6 +62,7 @@ public class StartUI : MonoBehaviour
             {
                 jump = !jump;
                 GameObject.Find("myData").GetComponent<SceneController>().NextSection();
+                return ;
             }
         }
         if (GUI.Button(new Rect(Screen.width * 0.8f - (lengthUnit * 5), Screen.height * 0.8f, lengthUnit * 10, lengthUnit * 5), "Quit/Q", titleStyle)

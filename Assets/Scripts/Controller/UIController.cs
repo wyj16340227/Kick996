@@ -19,9 +19,15 @@ public class UIController : Observer
         this.gameInfo = _gameInfo;
     }
 
-    public override void Reaction(PlayerState _playerState)
+    public override void ReactionPlayer(PlayerState _playerState)
     {
         playerState = _playerState;
+    }
+
+    //useless function
+    public override void ReactionEnemy(int enemyNum, int bossNum)
+    {
+
     }
 
     private void OnGUI()
@@ -30,6 +36,5 @@ public class UIController : Observer
         {
             GUI.Button(new Rect(Screen.width / 2, Screen.height / 2, 100, 50), "Game Over", fontstyle);
         }
-
     }
 }

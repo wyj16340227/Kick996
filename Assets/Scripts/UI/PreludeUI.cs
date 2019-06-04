@@ -51,6 +51,7 @@ public class PreludeUI : MonoBehaviour
                 jump = !jump;
                 Debug.Log("Turn to Start layer");
                 GameObject.Find("myData").GetComponent<SceneController>().NextSection();
+                return;
             }
         }
         GUI.Label(new Rect(Screen.width * 0.5f - (lengthUnit * 15), Screen.height * 0.5f, lengthUnit * 30, lengthUnit * 5), 

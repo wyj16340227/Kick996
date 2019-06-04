@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 public enum GameStatues
 {
@@ -8,7 +9,8 @@ public enum GameStatues
     GameOver,
     Win,
     Help,
-    Running
+    Running,
+    Loading
 }
 
 public class GameInfo
@@ -17,18 +19,42 @@ public class GameInfo
     public int section { get; set; }                    //section
 }
 
+public class Bound
+{
+    static public Vector3 leftBound = new Vector3(8, 0, 0);
+    static public Vector3 rightBound = new Vector3(-8, 0, 0);
+}
+
 public class SceneController : Observer
 {
     public GameInfo gameInfo = new GameInfo();
     public GameStatues status;                          //GameStatus, First in Start
     public int[][] enemyNum = new int[4][];             //enemy number of each section
+    public int[][] maxEnemyNum = new int[4][];          //Max num of enemy in scene
     public string[][] sectionName = new string[4][];    //section name of each chapter
     public int[] secNumPerChap;                         //section number of each chapter
     public int restEnemy;
     public UIController UI;
     public Model model;
+    public float loadingTime;
 
     public static float lengthUnit = Screen.height / 73;       //10
+
+    public override void ReactionPlayer(PlayerState playerState)
+    {
+        if (playerState.isDie)
+        {
+            status = GameStatues.GameOver;
+        }
+    }
+
+    public override void ReactionEnemy(int enemyNum, int bossNum)
+    {
+        if (enemyNum < maxEnemyNum[gameInfo.chapter][gameInfo.section])
+        {
+            model.GetAnEnemy();
+        }
+    }
 
     //statric function, get input from keyboard or kinect
     static public KeyCode GetInput()
@@ -51,8 +77,15 @@ public class SceneController : Observer
         gameInfo.chapter = 0;
         gameInfo.section = 0;
         status = GameStatues.Help;
-        enemyNum[0] = new int[] { 0, 0, 0 };
-        enemyNum[1] = new int[] { 6, 6, 6 };
+        {
+            enemyNum[0] = new int[] { 0, 0, 0 };
+            enemyNum[1] = new int[] { 6, 6, 6 };
+
+        }
+        {
+            maxEnemyNum[0] = new int[] { 0, 0, 0 };
+            maxEnemyNum[1] = new int[] { 3, 3, 3 };
+        }
         {
             secNumPerChap = new int[] { 3, 6 };
         }
@@ -63,26 +96,43 @@ public class SceneController : Observer
         UI = gameObject.AddComponent<UIController>() as UIController;
         UI.SetGame(gameInfo);
         model = gameObject.AddComponent<Model>() as Model;
-
-        //diskmanager.GetScore(scoreKeeper);
-
-
-        //GameObject player = Instantiate(Resources.Load("Prefabs/Player"), Vector3.up, Quaternion.identity) as GameObject;
-        //player.transform.rotation = Quaternion.Euler(0, 90, 0);
-        //player.transform.position = new Vector3(-5, -3, 0);
+        //model.getObserver(this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        switch (status)
+        {
+            case GameStatues.Loading:
+                if (loadingTime > 0)
+                {
+                    loadingTime -= Time.deltaTime;
+                }
+                else
+                {
+                    status = GameStatues.Running;
+                    model.NewScene(gameInfo);
+                }
+                break;
+            case GameStatues.Running:
+
+                break;
+            case GameStatues.GameOver:
+
+                break;
+            default:
+                //Console.WriteLine("无效的成绩");
+                break;
+        }
     }
 
     public void StartGame()
     {
         gameInfo.chapter = 1;
         gameInfo.section = 0;
-        status = GameStatues.Running;
+        status = GameStatues.Loading;
+        loadingTime = 1;
 #pragma warning disable CS0618 // 类型或成员已过时
         Application.LoadLevel(sectionName[gameInfo.chapter][gameInfo.section]);
 #pragma warning restore CS0618 // 类型或成员已过时
@@ -117,33 +167,4 @@ public class SceneController : Observer
         Application.LoadLevel(sectionName[gameInfo.chapter][gameInfo.section]);
 #pragma warning restore CS0618 // 类型或成员已过时
     }
-
-    public override void Reaction (PlayerState playerState)
-    {
-        if (playerState.isDie)
-        {
-            status = GameStatues.GameOver;
-        }
-    }
-
-
-    //private void OnGUI()
-    //{
-    //    switch (statues)
-    //    {
-    //        case GameStatues.:
-    //            //UI Main
-    //            break;
-    //        case GameStatues.Pause:
-    //            //UI Pause
-    //            if (GetInput() == KeyCode.P)
-    //            {
-    //                statues = lastStatus;
-    //            }
-    //            break;
-    //        case GameStatues.Chap1:
-    //            break;
-    //    }
-
-    //}
 }

@@ -10,12 +10,19 @@ public class Enemy : Observer {
 	void Start () {
 		
 	}
-    public override void Reaction(PlayerState _playerState)
+    public override void ReactionPlayer(PlayerState _playerState)
     {
         playerState = _playerState;
     }
-	// Update is called once per frame
-	void Update () {
+
+    //useless function
+    public override void ReactionEnemy(int enemyNum, int bossNum)
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 

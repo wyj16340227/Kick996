@@ -2,13 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyFactory : MonoBehaviour
+public class EnemyFactory : Subject
 {
     private static List<GameObject> used = new List<GameObject>();
     private static List<GameObject> free = new List<GameObject>();
     private string prefabPre;
     private string[] prefabName;
     private string prefabPath;
+    private int enemyNum = 0;
+    private int bossNum = 0;
+
+    protected List<Observer> obs = new List<Observer>();   //所有observer
+
+    public override void Attach(Observer o)
+    {
+        Debug.Log("get one " + o.name);
+        obs.Add(o);
+    }
+
+    public override void Detach(Observer o)
+    {
+        obs.Remove(o);
+    }
+
+    public override void NotifyPlayer(PlayerState playerState)
+    {
+
+    }
+
+    //useless funciton
+    public override void NotifyEnemy(int enemyNum, int bossNum)
+    {
+        foreach (Observer o in obs)
+        {
+            o.ReactionEnemy(enemyNum, bossNum);
+        }
+    }
 
     void Start()
     {
@@ -24,12 +53,22 @@ public class EnemyFactory : MonoBehaviour
     public void ResetEnemy(int chapter)
     {
         prefabPath = prefabPre + prefabName[chapter];
-        used.Clear();
-        free.Clear();
+        while (used.Count != 0)
+        {
+            used.RemoveAt(0);
+        }
+        while (free.Count != 0)
+        {
+            free.RemoveAt(0);
+        }
+        enemyNum = 0;
+        bossNum = 0;
+        this.NotifyEnemy(enemyNum, bossNum);
     }
 
     public GameObject GetEnemy()
     {
+        Debug.Log("Factory Get An Enemy");
         if (free.Count != 0)
         {
             used.Add(free[0]);
@@ -38,10 +77,13 @@ public class EnemyFactory : MonoBehaviour
         }
         else
         {
-            GameObject tempEnemy = Instantiate(Resources.Load(prefabPath), Vector3.up, Quaternion.identity) as GameObject;
+            GameObject tempEnemy = Instantiate(Resources.Load("Prefabs/Enemy1"), Vector3.up, Quaternion.identity) as GameObject;
             used.Add(tempEnemy);
             used[used.Count - 1].SetActive(true);
         }
+        used[used.Count - 1].transform.position = new Vector3(Random.Range(-7, 7), 0, 0);
+        enemyNum++;
+        this.NotifyEnemy(enemyNum, bossNum);
         return used[used.Count - 1];
     }
 
