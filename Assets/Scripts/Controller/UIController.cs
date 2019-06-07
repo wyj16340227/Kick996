@@ -7,6 +7,7 @@ public class UIController : Observer
     GUIStyle fontstyle = new GUIStyle();                    //GUI
     GameInfo gameInfo = new GameInfo();                     //display game infomation
     private PlayerState playerState = new PlayerState();
+    float lengthUnit = SceneController.lengthUnit;
     private void Start()
     {
         fontstyle.fontSize = 50;
@@ -36,5 +37,6 @@ public class UIController : Observer
         {
             GUI.Button(new Rect(Screen.width / 2, Screen.height / 2, 100, 50), "Game Over", fontstyle);
         }
+        GUI.Box(new Rect(10, 10, playerState.health, 20), playerState.health + "/100");
     }
 }

@@ -117,9 +117,9 @@ public class SceneController : Observer
             sectionName[0] = new string[] { "prelude", "start", "help" };
             sectionName[1] = new string[] { "chapaa" };
         }
+        model = gameObject.AddComponent<Model>() as Model;
         UI = gameObject.AddComponent<UIController>() as UIController;
         UI.SetGame(gameInfo);
-        model = gameObject.AddComponent<Model>() as Model;
         //model.getObserver(this);
     }
 
@@ -153,6 +153,7 @@ public class SceneController : Observer
 
     public void StartGame()
     {
+        model.getPlayer().GetComponent<Player>().Attach(UI);
         gameInfo.chapter = 1;
         gameInfo.section = 0;
         status = GameStatues.Loading;

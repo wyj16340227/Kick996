@@ -17,11 +17,12 @@ public class Enemy : Observer {
     private PlayerState playerState = new PlayerState();
     public EnemyState states = new EnemyState();
     public EnemyFactory mother;
+    public Texture2D blood;
 	// Use this for initialization
 	void Start () {
         states.level = 1;
         states.health = 100;
-        states.damage = 1;
+        states.damage = 10;
         states.defense = 1;
         states.chasingDis = 3;
         states.speed = 0.3f;
@@ -119,5 +120,11 @@ public class Enemy : Observer {
             Debug.Log(this.gameObject.name + "Start to chasing player");
             transform.LookAt(playerState.position);
         }
+    }
+
+    void OnGUI()
+    {
+        Vector3 headPos = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * 2.5f);   //将该物体头上的一点转化为屏幕坐标；  
+        GUI.DrawTexture(new Rect(headPos.x - 15, Screen.height - headPos.y, 20 * states.health / 100, 3), blood);   //（headPos.x-15,Screen.Height-headPos.y）
     }
 }

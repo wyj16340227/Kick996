@@ -23,8 +23,8 @@ public static class AttackList // static 不是必须
 {
     //此处可添加不同的攻击方式
     public static playerAttack stand = new playerAttack(0, 0, -1, 0, 0);             //静止，默认
-    public static playerAttack attack1 = new playerAttack(1, 1, 1, 0, 2);        //攻击，J
-    public static playerAttack big = new playerAttack(1, 1, 1, 0, 1f);            //大招，K
+    public static playerAttack attack1 = new playerAttack(1, 10, 1, 0, 2);        //攻击，J
+    public static playerAttack big = new playerAttack(1, 1, 20, 0, 1f);            //大招，K
     public static playerAttack defense = new playerAttack(0, 0, -1, 100, 2f);        //防御，L
 }
 
