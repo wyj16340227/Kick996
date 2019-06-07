@@ -11,6 +11,7 @@ public class EnemyFactory : Subject
     private string prefabPath;
     private int enemyNum = 0;
     private int bossNum = 0;
+    private int count = 0;
 
     protected List<Observer> obs = new List<Observer>();   //所有observer
 
@@ -78,12 +79,24 @@ public class EnemyFactory : Subject
         else
         {
             GameObject tempEnemy = Instantiate(Resources.Load("Prefabs/Enemy1"), Vector3.up, Quaternion.identity) as GameObject;
+            tempEnemy.name = "EnemyN" + count;
+            count++;
             used.Add(tempEnemy);
             used[used.Count - 1].SetActive(true);
         }
-        used[used.Count - 1].transform.position = new Vector3(Random.Range(-7, 7), 0, 0);
+        used[used.Count - 1].transform.position = new Vector3(Random.Range(-7, 7), 0, Random.Range(-7, 7));
+        used[used.Count - 1].transform.localEulerAngles = new Vector3(0, 0, 0);
         enemyNum++;
         this.NotifyEnemy(enemyNum, bossNum);
+
+
+        string t = "Factory: ";
+        foreach (GameObject e in used)
+        {
+            t += e.gameObject.name;
+        }
+        Debug.Log(t);
+
         return used[used.Count - 1];
     }
 

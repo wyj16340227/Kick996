@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Enemy\EnemyFactory.cs" />
     <Compile Include="Assets\Scripts\Observer.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\Subject.cs" />
     <Compile Include="Assets\Scripts\UI\ChapaaUI.cs" />
     <Compile Include="Assets\Scripts\UI\HelpUI.cs" />

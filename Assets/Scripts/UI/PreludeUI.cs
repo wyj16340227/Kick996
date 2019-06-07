@@ -43,7 +43,7 @@ public class PreludeUI : MonoBehaviour
 
     private void OnGUI()
     {
-        if (GUI.Button(new Rect(Screen.width * 0.7f, Screen.height * 0.8f, lengthUnit * 2, lengthUnit * 5),
+        if (GUI.Button(new Rect(Screen.width * 0.7f, Screen.height * 0.8f, lengthUnit * 20, lengthUnit * 5),
             "Skip/S", titleStyle) || SceneController.GetInput() == KeyCode.S)
         {
             if (!jump)

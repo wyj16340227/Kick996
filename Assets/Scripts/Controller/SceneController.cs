@@ -59,13 +59,37 @@ public class SceneController : Observer
     //statric function, get input from keyboard or kinect
     static public KeyCode GetInput()
     {
-        if (Input.anyKeyDown)
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            return Event.current.keyCode;
+            return KeyCode.S;
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            return KeyCode.R;
+        }
+        else if (Input.GetKeyDown(KeyCode.J))
+        {
+            return KeyCode.J;
+        }
+        else if (Input.GetKeyDown(KeyCode.K))
+        {
+            return KeyCode.K;
+        }
+        else if (Input.GetKeyDown(KeyCode.L))
+        {
+            return KeyCode.L;
+        }
+        else if (Input.GetKeyDown(KeyCode.H))
+        {
+            return KeyCode.H;
+        }
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            return KeyCode.Q;
         }
         else
         {
-            return KeyCode.L;
+            return KeyCode.None;
         }
     }
 
