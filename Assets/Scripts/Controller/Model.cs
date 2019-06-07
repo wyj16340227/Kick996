@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Model : MonoBehaviour
 {
-    private int count = 0;
     private Subject sub;
     private GameObject player;
     private EnemyFactory enemyFac;
@@ -15,6 +14,8 @@ public class Model : MonoBehaviour
         Debug.Log("Create a Model");
         player = Instantiate(Resources.Load("Prefabs/Player"), Vector3.up, Quaternion.identity) as GameObject;
         player.transform.position = new Vector3(0, 11, 0);
+        player.name = "Player";
+
         enemyFac = gameObject.AddComponent<EnemyFactory>() as EnemyFactory;
         enemyFac.GetComponent<EnemyFactory>().Attach(GameObject.Find("myData").GetComponent<SceneController>());
         sub = player.GetComponent<Player>();
@@ -37,10 +38,7 @@ public class Model : MonoBehaviour
     {
         Debug.Log("Model Get Enemy");
         GameObject tempobj = enemyFac.GetEnemy();
-        tempobj.name = "EnemyN" + count;
-        count++;
         tempobj.GetComponent<Enemy>().FindMother(enemyFac);
-        player.GetComponent<Player>().Attach(tempobj.GetComponent<Enemy>());
     }
 
     //

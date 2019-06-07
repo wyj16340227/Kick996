@@ -63,7 +63,6 @@ public class Player : Subject
         state.damage = 1;                       //攻击力
         state.defense = 1;                      //护甲
         state.time = 1;                         //技能时间
-        //state.position =                      //初始位置
 	}
 
     protected List<Observer> obs = new List<Observer>();   //所有observer

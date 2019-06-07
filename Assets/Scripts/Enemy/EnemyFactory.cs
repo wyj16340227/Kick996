@@ -12,6 +12,7 @@ public class EnemyFactory : Subject
     private int enemyNum = 0;
     private int bossNum = 0;
     private int count = 0;
+    public Player player;
 
     protected List<Observer> obs = new List<Observer>();   //所有observer
 
@@ -69,6 +70,10 @@ public class EnemyFactory : Subject
 
     public GameObject GetEnemy()
     {
+        if (player == null)
+        {
+            player = GameObject.Find("Player").GetComponent<Player>();
+        }
         Debug.Log("Factory Get An Enemy");
         if (free.Count != 0)
         {
@@ -81,11 +86,12 @@ public class EnemyFactory : Subject
             GameObject tempEnemy = Instantiate(Resources.Load("Prefabs/Enemy1"), Vector3.up, Quaternion.identity) as GameObject;
             tempEnemy.name = "EnemyN" + count;
             count++;
+            tempEnemy.transform.position = new Vector3(Random.Range(-7, 7), 0, Random.Range(-7, 7));
+            tempEnemy.transform.localEulerAngles = new Vector3(0, 0, 0);
             used.Add(tempEnemy);
-            used[used.Count - 1].SetActive(true);
+            tempEnemy.SetActive(true);
+            player.Attach(tempEnemy.GetComponent<Enemy>());
         }
-        used[used.Count - 1].transform.position = new Vector3(Random.Range(-7, 7), 0, Random.Range(-7, 7));
-        used[used.Count - 1].transform.localEulerAngles = new Vector3(0, 0, 0);
         enemyNum++;
         this.NotifyEnemy(enemyNum, bossNum);
 
