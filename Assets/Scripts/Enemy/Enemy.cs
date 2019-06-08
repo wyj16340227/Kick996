@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 
 public class EnemyState
 {
@@ -17,9 +18,10 @@ public class Enemy : Observer {
     private PlayerState playerState = new PlayerState();
     public EnemyState states = new EnemyState();
     public EnemyFactory mother;
-    public Texture2D blood;
-	// Use this for initialization
-	void Start () {
+    public Slider HealthSlider;
+    //public Texture2D blood;
+    // Use this for initialization
+    void Start () {
         states.level = 1;
         states.health = 100;
         states.damage = 10;
@@ -27,7 +29,10 @@ public class Enemy : Observer {
         states.chasingDis = 3;
         states.speed = 0.3f;
         states.CD = 0;
-	}
+        Canvas temp = transform.Find("Canvas").GetComponent<Canvas>();
+        //HealthSlider = temp.transform.GetChild(0).GetComponent<Slider>();
+        //HealthSlider = temp.GetComponentInChildren<Slider>();
+    }
 
     public void GetDamage(float amount)
     {
@@ -122,9 +127,9 @@ public class Enemy : Observer {
         }
     }
 
-    void OnGUI()
-    {
-        Vector3 headPos = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * 2.5f);   //将该物体头上的一点转化为屏幕坐标；  
-        GUI.DrawTexture(new Rect(headPos.x - 15, Screen.height - headPos.y, 20 * states.health / 100, 3), blood);   //（headPos.x-15,Screen.Height-headPos.y）
-    }
+    //void OnGUI()
+    //{
+    //    Vector3 headPos = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * 2.5f);   //将该物体头上的一点转化为屏幕坐标；  
+    //    GUI.DrawTexture(new Rect(headPos.x - 15, Screen.height - headPos.y, 20 * states.health / 100, 3), blood);   //（headPos.x-15,Screen.Height-headPos.y）
+    //}
 }

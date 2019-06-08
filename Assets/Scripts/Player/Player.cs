@@ -22,10 +22,10 @@ public class playerAttack
 public static class AttackList // static 不是必须
 {
     //此处可添加不同的攻击方式
-    public static playerAttack stand = new playerAttack(0, 0, -1, 0, 0);             //静止，默认
-    public static playerAttack attack1 = new playerAttack(1, 10, 1, 0, 2);        //攻击，J
-    public static playerAttack big = new playerAttack(1, 1, 20, 0, 1f);            //大招，K
-    public static playerAttack defense = new playerAttack(0, 0, -1, 100, 2f);        //防御，L
+    public static playerAttack stand = new playerAttack(0, 0, -1, 0, 0);            //静止，默认
+    public static playerAttack attack1 = new playerAttack(1, 10, 1, 0, 2);          //攻击，J
+    public static playerAttack big = new playerAttack(1, 1, 20, 0, 1f);             //大招，K
+    public static playerAttack defense = new playerAttack(0, 0, -1, 100, 2f);       //防御，L
 }
 
 public class PlayerState
@@ -43,6 +43,7 @@ public class PlayerState
 
 public class Player : Subject
 {
+    public Animator ani;
     public static playerAttack[] attackList = new playerAttack[5];
     private PlayerState state = new PlayerState();
 	// Use this for initialization
@@ -63,6 +64,7 @@ public class Player : Subject
         state.damage = 1;                       //攻击力
         state.defense = 1;                      //护甲
         state.time = 1;                         //技能时间
+        ani = GetComponent<Animator>();
 	}
 
     protected List<Observer> obs = new List<Observer>();   //所有observer
@@ -117,7 +119,7 @@ public class Player : Subject
             else
             {
                 state.attackState = AttackList.stand.id;
-                this.GetComponent<MeshRenderer>().material.color = Color.white;
+                //this.GetComponent<MeshRenderer>().material.color = Color.white;
             }
         }
         KeyCode kc = SceneController.GetInput();
@@ -125,21 +127,24 @@ public class Player : Subject
         {
             case KeyCode.J:
                 state.attackState = AttackList.attack1.id;
-                this.GetComponent<MeshRenderer>().material.color = Color.black;
+                //this.GetComponent<MeshRenderer>().material.color = Color.black;
                 state.time = AttackList.attack1.attackTime;
+                ani.SetBool("Attack1", true);
                 break;
             case KeyCode.K:
                 state.attackState = AttackList.big.id;
-                this.GetComponent<MeshRenderer>().material.color = Color.blue;
+                //this.GetComponent<MeshRenderer>().material.color = Color.blue;
                 state.time = AttackList.big.attackTime;
+                ani.SetBool("Attack2", true);
                 break;
             case KeyCode.L:
                 state.attackState = AttackList.defense.id;
-                this.GetComponent<MeshRenderer>().material.color = Color.green;
+                //this.GetComponent<MeshRenderer>().material.color = Color.green;
                 state.time = AttackList.defense.attackTime;
                 break;
             default:
-
+                ani.SetBool("Attack1", false);
+                ani.SetBool("Attack2", false);
                 break;
         }
     }

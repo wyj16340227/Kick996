@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Controller\UIController.cs" />
     <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyFactory.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Health.cs" />
     <Compile Include="Assets\Scripts\Observer.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Assets\Scripts\UI\HelpUI.cs" />
     <Compile Include="Assets\Scripts\UI\PreludeUI.cs" />
     <Compile Include="Assets\Scripts\UI\StartUI.cs" />
+    <None Include="Assets\RainEntertainment\FantasyMonster4\Demon Blade Lord\readMe.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/wjy/Documents/Kick996/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
