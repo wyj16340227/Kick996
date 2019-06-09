@@ -47,7 +47,7 @@ public class HelpUI : MonoBehaviour
             "Tips", titleStyle);
         for (int i = 0; i < 4; i++)
         {
-            if (GUI.Button(new Rect(Screen.width * 0.5f - (lengthUnit * 10 * (2 - i)), Screen.height * 0.2f, lengthUnit * 10, lengthUnit * 5), tips[i]))
+            if (GUI.Button(new Rect(Screen.width * 0.5f - (lengthUnit * 10 * (2 - i)), Screen.height * 0.3f, lengthUnit * 10, lengthUnit * 5), tips[i]))
             {
                 currentClick = i;
             }
