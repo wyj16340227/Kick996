@@ -23,6 +23,7 @@ public static class AttackList // static 不是必须
 {
     //此处可添加不同的攻击方式
     public static playerAttack stand = new playerAttack(0, 0, -1, 0, 0);            //静止，默认
+    public static playerAttack walk = new playerAttack(0, 0, -1, 0, 0);             //走路
     public static playerAttack attack1 = new playerAttack(1, 10, 1, 0, 2);          //攻击，J
     public static playerAttack big = new playerAttack(1, 1, 20, 0, 1f);             //大招，K
     public static playerAttack defense = new playerAttack(0, 0, -1, 100, 2f);       //防御，L
@@ -46,14 +47,22 @@ public class Player : Subject
     public Animator ani;
     public static playerAttack[] attackList = new playerAttack[5];
     private PlayerState state = new PlayerState();
-	// Use this for initialization
-	void Start ()
+    public static Dictionary<int, string> stateDic = new Dictionary<int, string>();
+    // Use this for initialization
+    void Start ()
     {
         {
             attackList[0] = AttackList.stand;
-            attackList[1] = AttackList.attack1;
-            attackList[2] = AttackList.big;
-            attackList[3] = AttackList.defense;
+            attackList[1] = AttackList.walk;
+            attackList[2] = AttackList.attack1;
+            attackList[3] = AttackList.big;
+            attackList[4] = AttackList.defense;
+        }
+        {
+            stateDic.Add(0, "Stand");
+            stateDic.Add(1, "Walk");
+            stateDic.Add(2, "Attack01");
+            stateDic.Add(3, "Attack02");
         }
 
         DontDestroyOnLoad(this);
@@ -109,42 +118,34 @@ public class Player : Subject
         state.position = transform.position;
         NotifyPlayer(state);
         //transform.Rotate(Vector3.up, Input.GetAxisRaw("Horizontal") * Time.deltaTime);
-        if (state.attackState != AttackList.stand.id)
+        AnimatorStateInfo stateInfo = ani.GetCurrentAnimatorStateInfo(0);
+        //攻击动作的时候不能移动
+        if (stateInfo.IsName(stateDic[2]) || stateInfo.IsName(stateDic[3]))
         {
-            if (state.time > 0)
-            {
-                state.time -= Time.deltaTime;
-                return;
-            }
-            else
-            {
-                state.attackState = AttackList.stand.id;
-                //this.GetComponent<MeshRenderer>().material.color = Color.white;
-            }
+            //攻击动作结束
+            ani.SetBool("Attack1", false);
+            ani.SetBool("Attack2", false);
+            return;
         }
         KeyCode kc = SceneController.GetInput();
         switch (kc)
         {
             case KeyCode.J:
                 state.attackState = AttackList.attack1.id;
-                //this.GetComponent<MeshRenderer>().material.color = Color.black;
-                state.time = AttackList.attack1.attackTime;
                 ani.SetBool("Attack1", true);
+                ani.SetBool("IsMoving", false);
                 break;
             case KeyCode.K:
                 state.attackState = AttackList.big.id;
                 //this.GetComponent<MeshRenderer>().material.color = Color.blue;
-                state.time = AttackList.big.attackTime;
                 ani.SetBool("Attack2", true);
+                ani.SetBool("IsMoving", false);
                 break;
             case KeyCode.L:
                 state.attackState = AttackList.defense.id;
                 //this.GetComponent<MeshRenderer>().material.color = Color.green;
-                state.time = AttackList.defense.attackTime;
                 break;
             default:
-                ani.SetBool("Attack1", false);
-                ani.SetBool("Attack2", false);
                 break;
         }
     }
@@ -181,20 +182,4 @@ public class Player : Subject
             }
         }
     }
-
-    //public void TakeDamage(int amount)
-    //{
-    //    damaged = true;
-
-    //    currentHealth -= amount;
-
-    //    healthSlider.value = currentHealth;
-
-    //    playerAudio.Play();
-
-    //    if (currentHealth <= 0 && !isDead)
-    //    {
-    //        Death();
-    //    }
-    //}
 }

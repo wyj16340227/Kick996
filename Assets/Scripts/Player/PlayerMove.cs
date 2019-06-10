@@ -20,11 +20,15 @@ public class PlayerMove : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         if (v !=0 || h != 0)
         {
-            transform.Translate(Vector3.forward * v * speed * Time.deltaTime);
-
-            transform.Translate(Vector3.right * h * speed * Time.deltaTime);
-            transform.Rotate(Vector3.up, h * angleSpeed * Time.deltaTime);
-            ani.SetBool("IsMoving", true);
+            AnimatorStateInfo stateInfo = ani.GetCurrentAnimatorStateInfo(0);
+            //非攻击动作时可移动
+            if (!stateInfo.IsName("Attack01") && !stateInfo.IsName("Attack02"))
+            {
+                transform.Translate(Vector3.forward * v * speed * Time.deltaTime);
+                transform.Translate(Vector3.right * h * speed * Time.deltaTime);
+                transform.Rotate(Vector3.up, h * angleSpeed * Time.deltaTime);
+                ani.SetBool("IsMoving", true);
+            }
         }
         else
         {
