@@ -46,7 +46,7 @@ public class StartUI : MonoBehaviour
                 GameLevel = i;
             }
         }
-        if (GUI.Button(new Rect(Screen.width * 0.2f - (lengthUnit * 5), Screen.height * 0.8f, lengthUnit * 10, lengthUnit * 5), "Start/S", titleStyle)
+        if (GUI.Button(new Rect(Screen.width * 0.2f - (lengthUnit * 5), Screen.height * 0.7f, lengthUnit * 10, lengthUnit * 5), "Start/S", titleStyle)
             || SceneController.GetInput() == KeyCode.S)
         {
             if (!jump)
@@ -55,7 +55,7 @@ public class StartUI : MonoBehaviour
                 GameObject.Find("myData").GetComponent<SceneController>().StartGame();
             }
         }
-        if (GUI.Button(new Rect(Screen.width * 0.5f - (lengthUnit * 5), Screen.height * 0.8f, lengthUnit * 10, lengthUnit * 5), "Help/H", titleStyle)
+        if (GUI.Button(new Rect(Screen.width * 0.5f - (lengthUnit * 5), Screen.height * 0.7f, lengthUnit * 10, lengthUnit * 5), "Help/H", titleStyle)
             || SceneController.GetInput() == KeyCode.H)
         {
             if (!jump)
@@ -65,7 +65,7 @@ public class StartUI : MonoBehaviour
                 return ;
             }
         }
-        if (GUI.Button(new Rect(Screen.width * 0.8f - (lengthUnit * 5), Screen.height * 0.8f, lengthUnit * 10, lengthUnit * 5), "Quit/Q", titleStyle)
+        if (GUI.Button(new Rect(Screen.width * 0.8f - (lengthUnit * 5), Screen.height * 0.7f, lengthUnit * 10, lengthUnit * 5), "Quit/Q", titleStyle)
             || SceneController.GetInput() == KeyCode.Q)
         {
             Application.Quit();
