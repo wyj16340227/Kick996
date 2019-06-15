@@ -29,7 +29,7 @@ public class Enemy : Observer {
         states.chasingDis = 3;
         states.speed = 0.3f;
         states.CD = 0;
-        Canvas temp = transform.Find("Canvas").GetComponent<Canvas>();
+        //Canvas temp = transform.Find("Canvas").GetComponent<Canvas>();
         //HealthSlider = temp.transform.GetChild(0).GetComponent<Slider>();
         //HealthSlider = temp.GetComponentInChildren<Slider>();
     }

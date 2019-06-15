@@ -37,7 +37,8 @@ public class SceneController : Observer
     public UIController UI;
     public Model model;
     public float loadingTime;
-
+    static public bool slideChangeWithGestures = true;
+    static private CubeGestureListener gestureListener;
     public static float lengthUnit = Screen.height / 73;       //10
 
     public override void ReactionPlayer(PlayerState playerState)
@@ -86,6 +87,19 @@ public class SceneController : Observer
         else if (Input.GetKeyDown(KeyCode.Q))
         {
             return KeyCode.Q;
+        }
+        if (slideChangeWithGestures && gestureListener)
+        {
+            if (gestureListener.IsSwipeLeft())
+                return KeyCode.A;
+            else if (gestureListener.IsSwipeRight())
+                return KeyCode.D;
+            else if (gestureListener.IsSwipeUp())
+                return KeyCode.W;
+            else
+            {
+                return KeyCode.None;
+            }
         }
         else
         {
