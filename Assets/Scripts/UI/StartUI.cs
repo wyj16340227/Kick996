@@ -15,14 +15,17 @@ public class StartUI : MonoBehaviour
     {
         Debug.Log("Welcome start layer");
         {
-            titleStyle.fontSize = (int)lengthUnit * 10;
-            titleStyle.normal.textColor = new Color(100, 100, 100);
+            titleStyle.fontSize = (int)lengthUnit * 8;
+			titleStyle.normal.textColor = Color.white;
             titleStyle.alignment = TextAnchor.MiddleCenter;
+			titleStyle.fontStyle = FontStyle.Italic;
+
         }
         {
             tipStyle.fontSize = (int)lengthUnit * 4;
             tipStyle.normal.textColor = new Color(100, 200, 150);
             tipStyle.alignment = TextAnchor.MiddleCenter;
+			titleStyle.fontStyle = FontStyle.Italic;
         }
         GameLevel = 0;
     }

@@ -16,18 +16,19 @@ public class PreludeUI : MonoBehaviour
     void Start()
     {
         Debug.Log("Welcome prelude layer");
-        intro = new string[] {"2312312312d story",
-        "good good study",
-        "day day up",
-        "Welcome"};
+
+        intro = new string[] {"这是一个勇者的故事",
+        "他从修道院出发，孑然一身",
+        "踏上了挑战魔王的道路",
+        "从这开始进入他的故事"};
         {
             titleStyle.fontSize = (int)lengthUnit * 10;
-            titleStyle.normal.textColor = new Color(100, 100, 100);
+			titleStyle.normal.textColor = Color.white;
             titleStyle.alignment = TextAnchor.MiddleCenter;
         }
         {
             tipStyle.fontSize = (int)lengthUnit * 4;
-            tipStyle.normal.textColor = new Color(100, 200, 150);
+            tipStyle.normal.textColor = new Color(192, 192, 192);
             tipStyle.alignment = TextAnchor.MiddleCenter;
         }
     }
@@ -54,7 +55,7 @@ public class PreludeUI : MonoBehaviour
                 return;
             }
         }
-        GUI.Label(new Rect(Screen.width * 0.5f - (lengthUnit * 15), Screen.height * 0.5f, lengthUnit * 30, lengthUnit * 5), 
+        GUI.Box(new Rect(Screen.width * 0.5f - (lengthUnit * 15), Screen.height * 0.5f, lengthUnit * 30, lengthUnit * 5), 
             intro[(int)(currentTime / secondPerSentence)], titleStyle);                     //story
     }
 }
