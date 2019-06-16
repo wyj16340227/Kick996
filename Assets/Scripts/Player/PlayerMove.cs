@@ -19,6 +19,7 @@ public class PlayerMove : MonoBehaviour
 
         titleStyle.fontSize = 40;
         titleStyle.normal.textColor = new Color(100, 100, 100);
+		titleStyle.fontStyle = FontStyle.Italic;
         ani = GetComponent<Animator>();
 
     }
