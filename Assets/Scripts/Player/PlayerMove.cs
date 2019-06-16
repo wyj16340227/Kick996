@@ -7,7 +7,6 @@ public class PlayerMove : MonoBehaviour
     public Animator ani;
     public float speed = 3f;
     public float angleSpeed = 30f;
-    public bool isRunning = false;
     static private CubeGestureListener gestureListener;
     static public bool slideChangeWithGestures = true;
     // Start is called before the first frame update
@@ -47,32 +46,15 @@ public class PlayerMove : MonoBehaviour
             {
                 h = 1;
             }
-            if (gestureListener.IsTpose())
-            {
-                if (isRunning)
-                {
-                    isRunning = false;
-                   
-                } else
-                {
-                    isRunning = true;
-
-                }
-            }
             if (gestureListener.LeanForward)
             {
                 v = 1;
             }
             if (gestureListener.LeanBack)
             {
-                isRunning = false;
                 v = -1;
             }
-            if (isRunning)
-            {
-                v = 2;
-            }
-
+     
         }
 
 
@@ -102,13 +84,7 @@ public class PlayerMove : MonoBehaviour
         fontStyle.normal.textColor = new Color(1, 0, 0);   //设置字体颜色
         fontStyle.fontSize = 80;       //字
 
-        if (isRunning)
-        {
-            sGestureText = "running";
-        } else
-        {
-            sGestureText = "stoping";
-        }
+
 
         GUI.Label(new Rect(800, 100, 300, 80), sGestureText, titleStyle);
 

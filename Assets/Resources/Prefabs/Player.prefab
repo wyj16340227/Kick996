@@ -351,6 +351,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerIndex: 0
   gestureInfo: {fileID: 8616988511644577720}
+  LeanLeft: 0
+  LeanRight: 0
+  LeanForward: 0
+  LeanBack: 0
+  detectSense: 12
 --- !u!1 &7165210669802031841
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,6 +896,7 @@ MonoBehaviour:
   ani: {fileID: 0}
   speed: 3
   angleSpeed: 45
+  isRunning: 0
 --- !u!114 &7546292309085519040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,7 +921,7 @@ Rigidbody:
   m_Mass: 0.0000001
   m_Drag: 0
   m_AngularDrag: 0
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 126

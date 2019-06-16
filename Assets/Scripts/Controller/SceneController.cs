@@ -106,6 +106,15 @@ public class SceneController : Observer
                 Debug.Log("Input.GetKeyDown(KeyCode.J)");
                 return KeyCode.K;
             }
+            if (gestureListener.IsTpose())
+            {
+                return KeyCode.R;
+            }
+            if (gestureListener.IsSwipeRight())
+            {
+                return KeyCode.Q;
+            }
+
             else
             {
                 return KeyCode.None;
@@ -133,7 +142,7 @@ public class SceneController : Observer
         }
         {
             maxEnemyNum[0] = new int[] { 0, 0, 0 };
-            maxEnemyNum[1] = new int[] { 3, 3, 3  };
+            maxEnemyNum[1] = new int[] { 6, 6, 6 };
         }
         {
             secNumPerChap = new int[] { 3, 6 };

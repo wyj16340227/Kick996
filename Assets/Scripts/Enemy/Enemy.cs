@@ -30,7 +30,7 @@ public class Enemy : Observer {
         states.health = 100;
         states.damage = 1;
         states.defense = 1;
-        states.chasingDis = 50;
+        states.chasingDis = 30;
         states.speed = 2f;
         states.CD = 0;
         Canvas temp = transform.Find("Canvas").GetComponent<Canvas>();
@@ -42,6 +42,10 @@ public class Enemy : Observer {
     public void GetDamage(float amount)
     {
         //Debug.Log("Enemy Get Attack " + amount);
+        AnimatorStateInfo stateInfo = GameObject.Find("Player").GetComponent<Player>().ani.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.IsName("Stand") || stateInfo.IsName("Walk")){
+            return;
+        }
         if (amount < 0)
         {
             return;

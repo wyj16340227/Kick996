@@ -87,7 +87,7 @@ public class EnemyFactory : Subject
             tempEnemy.GetComponent<Enemy>().FindMother(this.GetComponent<EnemyFactory>());
             tempEnemy.name = "EnemyN" + count;
             count++;
-            tempEnemy.transform.position = new Vector3(Random.Range(-7, 7), 0, Random.Range(-7, 7));
+            tempEnemy.transform.position = new Vector3(Random.Range(-80, 80), 0, Random.Range(-80, 80));
             tempEnemy.transform.localEulerAngles = new Vector3(0, 0, 0);
             used.Add(tempEnemy);
             tempEnemy.SetActive(true);

@@ -167,7 +167,6 @@ public class CubeGestureListener : MonoBehaviour, KinectGestures.GestureListener
 	{
         // the gestures are allowed for the primary user only
         sGestureText = gesture + " detected";
-        Debug.Log(sGestureText);
 
 
         if (userIndex != playerIndex)

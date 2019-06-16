@@ -148,6 +148,10 @@ public class Player : Subject
                 break;
             case KeyCode.Q:
                 //this.GetComponent<MeshRenderer>().material.color = Color.green;
+                transform.Translate(Vector3.forward * 5);
+                break;
+            case KeyCode.R:
+                transform.Rotate(Vector3.up, 180);
                 break;
             default:
                 break;

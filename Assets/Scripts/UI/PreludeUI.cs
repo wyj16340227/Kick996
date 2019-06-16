@@ -16,7 +16,7 @@ public class PreludeUI : MonoBehaviour
     void Start()
     {
         Debug.Log("Welcome prelude layer");
-        intro = new string[] {"this is a old story",
+        intro = new string[] {"2312312312d story",
         "good good study",
         "day day up",
         "Welcome"};
