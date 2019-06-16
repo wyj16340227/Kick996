@@ -17,7 +17,7 @@ public class CubeGestureListener : MonoBehaviour, KinectGestures.GestureListener
 	private bool progressDisplayed;
 	private float progressGestureTime;
     private string sGestureText = "not detected any motion";
-
+    //private bool isRunning;
     // whether the needed gesture has been detected or not
     private bool swipeLeft;
 	private bool swipeRight;
@@ -25,9 +25,12 @@ public class CubeGestureListener : MonoBehaviour, KinectGestures.GestureListener
     private bool RaiseLeftHand;
     private bool RaiseRightHand;
     private bool Tpose;
-    private bool LeanLeft;
-    private bool LeanRight
-        ;
+    public bool LeanLeft;
+    public bool LeanRight;
+    public bool LeanForward;
+    public bool LeanBack;
+
+    public int detectSense = 12;
     /// <summary>
     /// Gets the singleton CubeGestureListener instance.
     /// </summary>
@@ -85,72 +88,25 @@ public class CubeGestureListener : MonoBehaviour, KinectGestures.GestureListener
 	{
 		if(swipeUp)
 		{
-			swipeUp = false;
-            LeanRight = false;
-            LeanLeft = false;
-            Tpose = false;
+            swipeUp = false;
             return true;
 		}
 		
 		return false;
 	}
 
-
-    public bool IsRaiseLeftHandp()
-    {
-        if (RaiseLeftHand)
-        {
-            RaiseRightHand = false;
-            return true;
-        }
-
-        return false;
-    }
-    public bool IsRaiseRightHand()
-    {
-        if (RaiseRightHand)
-        {
-            RaiseLeftHand = false;
-            return true;
-        }
-
-        return false;
-    }
-
     public bool IsTpose()
     {
         if (Tpose)
         {
+            Tpose = false;
             return true;
         }
 
         return false;
     }
 
-
-    public bool IsLeanLeft()
-    {
-        if (LeanLeft)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-
-    public bool IsLeanRight()
-    {
-        if (LeanRight)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-
-
+  
 
     /// <summary>
     /// Invoked when a new user is detected. Here you can start gesture tracking by invoking KinectManager.DetectGesture()-function.
@@ -172,6 +128,9 @@ public class CubeGestureListener : MonoBehaviour, KinectGestures.GestureListener
         manager.DetectGesture(userId, KinectGestures.Gestures.LeanLeft);
         manager.DetectGesture(userId, KinectGestures.Gestures.LeanRight);
         manager.DetectGesture(userId, KinectGestures.Gestures.Stop);
+        manager.DetectGesture(userId, KinectGestures.Gestures.LeanForward);
+        manager.DetectGesture(userId, KinectGestures.Gestures.LeanBack);
+
 
 
 	    sGestureText = "change the slides.";
@@ -207,32 +166,25 @@ public class CubeGestureListener : MonoBehaviour, KinectGestures.GestureListener
 	                              float progress, KinectInterop.JointType joint, Vector3 screenPos)
 	{
         // the gestures are allowed for the primary user only
-
+        sGestureText = gesture + " detected";
+        Debug.Log(sGestureText);
 
 
         if (userIndex != playerIndex)
 			return;
 
-		if((gesture == KinectGestures.Gestures.ZoomOut || gesture == KinectGestures.Gestures.ZoomIn) && progress > 0.5f)
+	
+		 if((gesture == KinectGestures.Gestures.Wheel || gesture == KinectGestures.Gestures.LeanLeft || 
+		         gesture == KinectGestures.Gestures.LeanRight || gesture == KinectGestures.Gestures.LeanForward ||
+                 gesture == KinectGestures.Gestures.LeanBack) && progress > 0.01f)
 		{
 			if(gestureInfo != null)
 			{
-			    sGestureText = string.Format ("{0} - {1:F0}%", gesture, screenPos.z * 100f);
-				gestureInfo.text = sGestureText;
-				
-				progressDisplayed = true;
-				progressGestureTime = Time.realtimeSinceStartup;
-			}
-		}
-		else if((gesture == KinectGestures.Gestures.Wheel || gesture == KinectGestures.Gestures.LeanLeft || 
-		         gesture == KinectGestures.Gestures.LeanRight) && progress > 0.5f)
-		{
-			if(gestureInfo != null)
-			{
+                
 				sGestureText = string.Format ("{0} - {1:F0} degrees", gesture, screenPos.z);
 				gestureInfo.text = sGestureText;
 
-                if (gesture == KinectGestures.Gestures.LeanLeft)
+                if (gesture == KinectGestures.Gestures.LeanLeft && screenPos.z > detectSense)
                 {
                     LeanLeft = true;
                 } else
@@ -240,7 +192,7 @@ public class CubeGestureListener : MonoBehaviour, KinectGestures.GestureListener
                     LeanLeft = false;
                 }
                     
-                if (gesture == KinectGestures.Gestures.LeanRight)
+                if (gesture == KinectGestures.Gestures.LeanRight && screenPos.z > detectSense)
                 {
                     LeanRight = true;
                 }else
@@ -248,22 +200,30 @@ public class CubeGestureListener : MonoBehaviour, KinectGestures.GestureListener
                     LeanRight = false;
                 }
 
+                if (gesture == KinectGestures.Gestures.LeanForward && screenPos.z > detectSense)
+                {
+                    LeanForward = true;
+                }
+                else
+                {
+                    LeanForward = false;
+                }
+
+
+                if (gesture == KinectGestures.Gestures.LeanBack && screenPos.z > detectSense + 10)
+                {
+                    LeanBack = true;
+                }
+                else
+                {
+                    LeanBack = false;
+                }
 
                 progressDisplayed = true;
 				progressGestureTime = Time.realtimeSinceStartup;
 			}
 		}
-		else if(gesture == KinectGestures.Gestures.Run && progress > 0.5f)
-		{
-			if(gestureInfo != null)
-			{
-				sGestureText = string.Format ("{0} - progress: {1:F0}%", gesture, progress * 100);
-				gestureInfo.text = sGestureText;
-				
-				progressDisplayed = true;
-				progressGestureTime = Time.realtimeSinceStartup;
-			}
-		}
+	
 	}
 
 	/// <summary>

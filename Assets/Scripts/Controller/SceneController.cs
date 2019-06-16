@@ -28,7 +28,6 @@ public class Bound
 public class SceneController : Observer
 {
     private GUIStyle titleStyle = new GUIStyle();
-    private static string sGestureText = "none";
     public GameInfo gameInfo = new GameInfo();
     public GameStatues status;                          //GameStatus, First in Start
     public int[][] enemyNum = new int[4][];             //enemy number of each section
@@ -96,16 +95,16 @@ public class SceneController : Observer
         else if (slideChangeWithGestures && gestureListener)
         {
 
-            sGestureText = ("IsLeanLeft() " + gestureListener.IsLeanLeft())+ "\n" +
-            ("IsLeanRight()" + gestureListener.IsLeanRight()) + "\n" +
-            ("IsTpose()    " + gestureListener.IsTpose()) + "\n" +
-            ("IsSwipeUp()    " + gestureListener.IsSwipeUp());
-
-          
             if (gestureListener.IsSwipeUp())
             {
                 Debug.Log("Input.GetKeyDown(KeyCode.J)");
                 return KeyCode.J;
+            }
+
+            if (gestureListener.IsSwipeLeft())
+            {
+                Debug.Log("Input.GetKeyDown(KeyCode.J)");
+                return KeyCode.K;
             }
             else
             {
@@ -122,8 +121,6 @@ public class SceneController : Observer
     void Start()
     {
 
-        titleStyle.fontSize = 40;
-        titleStyle.normal.textColor = new Color(100, 100, 100);
         Debug.Log("create a scene controller");
         DontDestroyOnLoad(this);
         gameInfo.chapter = 0;
@@ -136,7 +133,7 @@ public class SceneController : Observer
         }
         {
             maxEnemyNum[0] = new int[] { 0, 0, 0 };
-            maxEnemyNum[1] = new int[] { 0, 0, 0 };
+            maxEnemyNum[1] = new int[] { 3, 3, 3  };
         }
         {
             secNumPerChap = new int[] { 3, 6 };
@@ -194,6 +191,8 @@ public class SceneController : Observer
 
         GameObject.Find("Player").GetComponent<Player>().GetComponent<PlayerMove>().SetListener();
 
+
+
     }
 
     public void NextSection()
@@ -226,15 +225,7 @@ public class SceneController : Observer
 #pragma warning restore CS0618 // 类型或成员已过时
     }
 
-    private void OnGUI()
-    {
 
-        GUIStyle fontStyle = new GUIStyle();
-        fontStyle.normal.background = null;    //设置背景填充
-        fontStyle.normal.textColor = new Color(1, 0, 0);   //设置字体颜色
-        fontStyle.fontSize = 80;       //字
-        GUI.Label(new Rect(800, 0, 300, 240), sGestureText, titleStyle);
-    }
 
 
 }

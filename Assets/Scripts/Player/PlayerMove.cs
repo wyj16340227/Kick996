@@ -7,11 +7,18 @@ public class PlayerMove : MonoBehaviour
     public Animator ani;
     public float speed = 3f;
     public float angleSpeed = 30f;
+    public bool isRunning = false;
     static private CubeGestureListener gestureListener;
     static public bool slideChangeWithGestures = true;
     // Start is called before the first frame update
+    private string sGestureText = "";
+    private GUIStyle titleStyle = new GUIStyle();
+
     void Start()
     {
+
+        titleStyle.fontSize = 40;
+        titleStyle.normal.textColor = new Color(100, 100, 100);
         ani = GetComponent<Animator>();
 
     }
@@ -29,24 +36,44 @@ public class PlayerMove : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         float h = Input.GetAxisRaw("Horizontal");
 
-        //if (slideChangeWithGestures && gestureListener)
-        //{
+        if (slideChangeWithGestures && gestureListener)
+        {
 
-        //    if (gestureListener.IsLeanLeft())
-        //    {
-        //        h = -1;
-        //    }
-        //    if (gestureListener.IsLeanRight())
-        //    {
-        //        h = 1;
-        //    }
-        //    if (gestureListener.IsTpose())
-        //    {
-        //        v = 1;
-        //    }
-        
-        //}
-       
+            if (gestureListener.LeanLeft)
+            {
+                h = -1;
+            }
+            if (gestureListener.LeanRight)
+            {
+                h = 1;
+            }
+            if (gestureListener.IsTpose())
+            {
+                if (isRunning)
+                {
+                    isRunning = false;
+                   
+                } else
+                {
+                    isRunning = true;
+
+                }
+            }
+            if (gestureListener.LeanForward)
+            {
+                v = 1;
+            }
+            if (gestureListener.LeanBack)
+            {
+                isRunning = false;
+                v = -1;
+            }
+            if (isRunning)
+            {
+                v = 2;
+            }
+
+        }
 
 
         if (v != 0 || h != 0)
@@ -66,5 +93,24 @@ public class PlayerMove : MonoBehaviour
         {
             ani.SetBool("IsMoving", false);
         }
+    }
+    private void OnGUI()
+    {
+
+        GUIStyle fontStyle = new GUIStyle();
+        fontStyle.normal.background = null;    //设置背景填充
+        fontStyle.normal.textColor = new Color(1, 0, 0);   //设置字体颜色
+        fontStyle.fontSize = 80;       //字
+
+        if (isRunning)
+        {
+            sGestureText = "running";
+        } else
+        {
+            sGestureText = "stoping";
+        }
+
+        GUI.Label(new Rect(800, 100, 300, 80), sGestureText, titleStyle);
+
     }
 }
