@@ -27,6 +27,8 @@ public class Bound
 
 public class SceneController : Observer
 {
+    private GUIStyle titleStyle = new GUIStyle();
+    private static string sGestureText = "none";
     public GameInfo gameInfo = new GameInfo();
     public GameStatues status;                          //GameStatus, First in Start
     public int[][] enemyNum = new int[4][];             //enemy number of each section
@@ -60,6 +62,8 @@ public class SceneController : Observer
     //statric function, get input from keyboard or kinect
     static public KeyCode GetInput()
     {
+
+
         if (Input.GetKeyDown(KeyCode.S))
         {
             return KeyCode.S;
@@ -70,6 +74,7 @@ public class SceneController : Observer
         }
         else if (Input.GetKeyDown(KeyCode.J))
         {
+            Debug.Log("Input.GetKeyDown(KeyCode.J)");
             return KeyCode.J;
         }
         else if (Input.GetKeyDown(KeyCode.K))
@@ -88,14 +93,20 @@ public class SceneController : Observer
         {
             return KeyCode.Q;
         }
-        if (slideChangeWithGestures && gestureListener)
+        else if (slideChangeWithGestures && gestureListener)
         {
-            if (gestureListener.IsSwipeLeft())
-                return KeyCode.A;
-            else if (gestureListener.IsSwipeRight())
-                return KeyCode.D;
-            else if (gestureListener.IsSwipeUp())
-                return KeyCode.W;
+
+            sGestureText = ("IsLeanLeft() " + gestureListener.IsLeanLeft())+ "\n" +
+            ("IsLeanRight()" + gestureListener.IsLeanRight()) + "\n" +
+            ("IsTpose()    " + gestureListener.IsTpose()) + "\n" +
+            ("IsSwipeUp()    " + gestureListener.IsSwipeUp());
+
+          
+            if (gestureListener.IsSwipeUp())
+            {
+                Debug.Log("Input.GetKeyDown(KeyCode.J)");
+                return KeyCode.J;
+            }
             else
             {
                 return KeyCode.None;
@@ -110,6 +121,9 @@ public class SceneController : Observer
     // Start is called before the first frame update
     void Start()
     {
+
+        titleStyle.fontSize = 40;
+        titleStyle.normal.textColor = new Color(100, 100, 100);
         Debug.Log("create a scene controller");
         DontDestroyOnLoad(this);
         gameInfo.chapter = 0;
@@ -122,7 +136,7 @@ public class SceneController : Observer
         }
         {
             maxEnemyNum[0] = new int[] { 0, 0, 0 };
-            maxEnemyNum[1] = new int[] { 3, 3, 3 };
+            maxEnemyNum[1] = new int[] { 0, 0, 0 };
         }
         {
             secNumPerChap = new int[] { 3, 6 };
@@ -151,6 +165,8 @@ public class SceneController : Observer
                 {
                     status = GameStatues.Running;
                     model.NewScene(gameInfo);
+                    gestureListener = CubeGestureListener.Instance;
+                    //Debug.Log(gestureListener.gestureInfo);
                 }
                 break;
             case GameStatues.Running:
@@ -175,6 +191,9 @@ public class SceneController : Observer
 #pragma warning disable CS0618 // 类型或成员已过时
         Application.LoadLevel(sectionName[gameInfo.chapter][gameInfo.section]);
 #pragma warning restore CS0618 // 类型或成员已过时
+
+        GameObject.Find("Player").GetComponent<Player>().GetComponent<PlayerMove>().SetListener();
+
     }
 
     public void NextSection()
@@ -206,4 +225,16 @@ public class SceneController : Observer
         Application.LoadLevel(sectionName[gameInfo.chapter][gameInfo.section]);
 #pragma warning restore CS0618 // 类型或成员已过时
     }
+
+    private void OnGUI()
+    {
+
+        GUIStyle fontStyle = new GUIStyle();
+        fontStyle.normal.background = null;    //设置背景填充
+        fontStyle.normal.textColor = new Color(1, 0, 0);   //设置字体颜色
+        fontStyle.fontSize = 80;       //字
+        GUI.Label(new Rect(800, 0, 300, 240), sGestureText, titleStyle);
+    }
+
+
 }

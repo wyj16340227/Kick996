@@ -22,10 +22,10 @@ public class playerAttack
 public static class AttackList // static 不是必须
 {
     //此处可添加不同的攻击方式
-    public static playerAttack stand = new playerAttack(0, 0, -1, 0, 0);            //静止，默认
-    public static playerAttack walk = new playerAttack(0, 0, -1, 0, 0);             //走路
+    public static playerAttack stand = new playerAttack(0, 10, -1, 0, 0);            //静止，默认
+    public static playerAttack walk = new playerAttack(0, 10, -1, 0, 0);             //走路
     public static playerAttack attack1 = new playerAttack(1, 10, 1, 0, 2);          //攻击，J
-    public static playerAttack big = new playerAttack(1, 1, 20, 0, 1f);             //大招，K
+    public static playerAttack big = new playerAttack(1, 10, 20, 0, 1f);             //大招，K
     public static playerAttack defense = new playerAttack(0, 0, -1, 100, 2f);       //防御，L
 }
 
@@ -46,7 +46,7 @@ public class Player : Subject
 {
     public Animator ani;
     public static playerAttack[] attackList = new playerAttack[5];
-    private PlayerState state = new PlayerState();
+    public PlayerState state = new PlayerState();
     public static Dictionary<int, string> stateDic = new Dictionary<int, string>();
     // Use this for initialization
     void Start ()
@@ -100,7 +100,7 @@ public class Player : Subject
     {
         foreach (Observer o in obs)
         {
-            Debug.Log("told " + o.gameObject.name);
+            //Debug.Log("told " + o.gameObject.name);
             o.ReactionPlayer(playerState);
         }
     }
@@ -128,6 +128,7 @@ public class Player : Subject
             return;
         }
         KeyCode kc = SceneController.GetInput();
+
         switch (kc)
         {
             case KeyCode.J:
@@ -143,6 +144,9 @@ public class Player : Subject
                 break;
             case KeyCode.L:
                 state.attackState = AttackList.defense.id;
+                //this.GetComponent<MeshRenderer>().material.color = Color.green;
+                break;
+            case KeyCode.Q:
                 //this.GetComponent<MeshRenderer>().material.color = Color.green;
                 break;
             default:
@@ -166,20 +170,21 @@ public class Player : Subject
 
     public void Death ()
     {
-
+        this.state.isDie = true;
+        this.ani.SetBool("IsDie", true);
     }
 
-    void OnCollisionEnter(Collision e)
-    {
-        Debug.Log("Player On Collision with " +  e.gameObject.name);
-        if (e.gameObject.CompareTag("Enemy"))
-        {
-            int temp = state.attackState;
-            float enemyKill = state.damage * attackList[temp].damage - e.gameObject.GetComponent<Enemy>().GetDefense();
-            if (enemyKill > 0)
-            {
-                e.gameObject.GetComponent<Enemy>().GetDamage(enemyKill);
-            }
-        }
-    }
+    //void OnCollisionEnter(Collision e)
+    //{
+    //    Debug.Log("Player On Collision with " +  e.gameObject.name);
+    //    if (e.gameObject.CompareTag("Enemy"))
+    //    {
+    //        int temp = state.attackState;
+    //        float enemyKill = state.damage * attackList[temp].damage - e.gameObject.GetComponent<Enemy>().GetDefense();
+    //        if (enemyKill > 0)
+    //        {
+    //            e.gameObject.GetComponent<Enemy>().GetDamage(enemyKill);
+    //        }
+    //    }
+    //}
 }

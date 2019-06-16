@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.UIElements;
+using UnityEngine.UI;
 
 public class EnemyState
 {
@@ -18,33 +19,38 @@ public class Enemy : Observer {
     private PlayerState playerState = new PlayerState();
     public EnemyState states = new EnemyState();
     public EnemyFactory mother;
-    public Slider HealthSlider;
+    public UnityEngine.UI.Image lifeBar;
+    // Use this for initialization
+
+
     //public Texture2D blood;
     // Use this for initialization
     void Start () {
         states.level = 1;
         states.health = 100;
-        states.damage = 10;
+        states.damage = 1;
         states.defense = 1;
-        states.chasingDis = 3;
-        states.speed = 0.3f;
+        states.chasingDis = 50;
+        states.speed = 2f;
         states.CD = 0;
-        //Canvas temp = transform.Find("Canvas").GetComponent<Canvas>();
-        //HealthSlider = temp.transform.GetChild(0).GetComponent<Slider>();
-        //HealthSlider = temp.GetComponentInChildren<Slider>();
-    }
+        Canvas temp = transform.Find("Canvas").GetComponent<Canvas>();
+        
+    //HealthSlider = temp.transform.GetChild(0).GetComponent<Slider>();
+    //HealthSlider = temp.GetComponentInChildren<Slider>();
+}
 
     public void GetDamage(float amount)
     {
-        Debug.Log("Enemy Get Attack");
+        //Debug.Log("Enemy Get Attack " + amount);
         if (amount < 0)
         {
             return;
         }
         states.health -= amount;
+        lifeBar.fillAmount -= (amount / 100);
         if (states.health < 0)
         {
-            Debug.Log("Enemy Die");
+            //Debug.Log("Enemy Die");
             mother.FreeEnemy(this.gameObject);
         }
     }
@@ -56,7 +62,7 @@ public class Enemy : Observer {
 
     public override void ReactionPlayer(PlayerState _playerState)
     {
-        Debug.Log(this.gameObject.name + "get message");
+        //Debug.Log(this.gameObject.name + "get message");
         playerState = _playerState;
     }
 
@@ -73,7 +79,7 @@ public class Enemy : Observer {
 
     void OnCollisionEnter(Collision e)
     {
-        Debug.Log(this.name + " On Collision with " + e.gameObject.name);
+        //Debug.Log(this.name + " On Collision with " + e.gameObject.name);
         //collision not the player
         //if (e.gameObject.CompareTag("Wall") || e.gameObject.CompareTag("Enemy"))
         if (!e.gameObject.CompareTag("Player"))
@@ -122,7 +128,7 @@ public class Enemy : Observer {
         //}
         if (distance < states.chasingDis)
         {
-            Debug.Log(this.gameObject.name + "Start to chasing player");
+            //Debug.Log(this.gameObject.name + "Start to chasing player");
             transform.LookAt(playerState.position);
         }
     }

@@ -84,6 +84,7 @@ public class EnemyFactory : Subject
         else
         {
             GameObject tempEnemy = Instantiate(Resources.Load("Prefabs/Enemy1"), Vector3.up, Quaternion.identity) as GameObject;
+            tempEnemy.GetComponent<Enemy>().FindMother(this.GetComponent<EnemyFactory>());
             tempEnemy.name = "EnemyN" + count;
             count++;
             tempEnemy.transform.position = new Vector3(Random.Range(-7, 7), 0, Random.Range(-7, 7));
